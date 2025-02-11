@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Money Manager</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>💰 Money Manager</h1>
+        <p>Kelola pemasukan & pengeluaranmu dengan mudah!</p>
+    </header>
+
+    <main>
+        <div id="dashboard">
+            <h2>Saldo Saat Ini</h2>
+            <p id="saldo">Rp 0.00</p>
+        </div>
+
+        <div id="form">
+            <h3>Tambah Transaksi</h3>
+            <form id="transaction-form">
+                <label for="amount">Jumlah Uang (Rp):</label>
+                <input type="number" id="amount" required>
+
+                <label for="type">Jenis Transaksi:</label>
+                <select id="type">
+                    <option value="income">Pemasukan</option>
+                    <option value="expense">Pengeluaran</option>
+                </select>
+
+                <button type="submit">Tambah</button>
+            </form>
+        </div>
+
+        <div id="history">
+            <h3>Riwayat Transaksi</h3>
+            <ul id="transaction-history"></ul>
+        </div>
+
+        <button id="reset-button">🔄 Reset Data</button>
+    </main>
+
+    <script src="script.js"></script>
+    <footer>
+        <p>© 2025 Buatan <strong>Syarif Hidayat</strong> dan <strong>ChatGPT</strong>. Semua Hak Dilindungi.</p>
+    </footer>
+</body>
+</html>
