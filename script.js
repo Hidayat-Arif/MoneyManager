@@ -1,4 +1,3 @@
-// script.js
 document.addEventListener('DOMContentLoaded', () => {
     let balance = parseFloat(localStorage.getItem('balance')) || 0;
     const saldoElement = document.getElementById('saldo');
@@ -11,14 +10,14 @@ document.addEventListener('DOMContentLoaded', () => {
     saldoElement.textContent = `Rp ${balance.toFixed(2)}`;
 
     const transactions = JSON.parse(localStorage.getItem('transactions')) || [];
-    transactions.forEach(transaction => {
-        addTransactionToHistory(transaction);
-    });
+    transactions.forEach(transaction => addTransactionToHistory(transaction));
 
     form.addEventListener('submit', (e) => {
         e.preventDefault();
         const amount = parseFloat(amountInput.value);
         const type = typeSelect.value;
+        const date = new Date();
+        const formattedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`;
 
         if (type === 'expense' && balance < amount) {
             saldoElement.classList.add('low');
@@ -29,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
         balance += type === 'income' ? amount : -amount;
         saldoElement.textContent = `Rp ${balance.toFixed(2)}`;
 
-        const transaction = { type, amount };
+        const transaction = { type, amount, date: formattedDate };
         transactions.push(transaction);
         localStorage.setItem('transactions', JSON.stringify(transactions));
         localStorage.setItem('balance', balance.toFixed(2));
@@ -41,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function addTransactionToHistory(transaction) {
         const li = document.createElement('li');
         li.classList.add(transaction.type);
-        li.textContent = `${transaction.type === 'income' ? 'Pemasukan' : 'Pengeluaran'}: Rp ${transaction.amount.toFixed(2)}`;
+        li.innerHTML = `${transaction.type === 'income' ? '📈' : '📉'} Rp ${transaction.amount.toFixed(2)} - <small>${transaction.date}</small>`;
         transactionHistory.appendChild(li);
     }
 

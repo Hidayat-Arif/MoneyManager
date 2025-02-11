@@ -1,4 +1,4 @@
-/* styles.css */
+/* General Layout */
 body {
     font-family: 'Poppins', sans-serif;
     background: #121212;
@@ -6,6 +6,7 @@ body {
     margin: 0;
     padding: 0;
     text-align: center;
+    overflow-x: hidden; /* Prevent horizontal overflow */
 }
 
 header {
@@ -13,11 +14,24 @@ header {
     padding: 20px;
     border-bottom: 3px solid #00ffcc;
     box-shadow: 0px 4px 10px rgba(0, 255, 255, 0.5);
+    animation: headerMove 1s ease-in-out;
+}
+
+@keyframes headerMove {
+    0% { transform: translateY(-20px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
 }
 
 h1 {
     margin: 0;
-    font-size: 2rem;
+    font-size: 2.5rem;
+    animation: bounceIn 1s ease-in-out;
+}
+
+@keyframes bounceIn {
+    0% { transform: translateY(-30px); opacity: 0; }
+    50% { transform: translateY(15px); }
+    100% { transform: translateY(0); opacity: 1; }
 }
 
 p {
@@ -25,6 +39,7 @@ p {
     font-size: 1rem;
 }
 
+/* Main Content */
 main {
     max-width: 400px;
     margin: 30px auto;
@@ -38,13 +53,18 @@ main {
     margin: 20px 0;
     border-radius: 10px;
     box-shadow: 0px 4px 10px rgba(0, 255, 255, 0.2);
+    transition: transform 0.3s ease-in-out;
+}
+
+#dashboard:hover, #form:hover, #history:hover {
+    transform: scale(1.03);
 }
 
 #saldo {
-    font-size: 2rem;
+    font-size: 2.5rem;
     font-weight: bold;
     color: #00ffcc;
-    transition: transform 0.3s ease-in-out;
+    transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 
 #saldo.low {
@@ -52,33 +72,45 @@ main {
     animation: shake 0.5s ease-in-out infinite;
 }
 
-/* Form */
-form {
-    display: flex;
-    flex-direction: column;
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
 }
 
-label {
-    text-align: left;
-    font-weight: bold;
-    margin: 10px 0 5px;
+/* Transaction History */
+#transaction-history {
+    list-style: none;
+    padding: 0;
 }
 
-input, select {
+#transaction-history li {
+    background: rgba(255, 255, 255, 0.1);
+    margin: 10px 0;
     padding: 10px;
     border-radius: 5px;
-    border: none;
-    font-size: 1rem;
-    background: rgba(255, 255, 255, 0.2);
-    color: white;
-    transition: 0.3s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    animation: slideIn 0.5s ease-out;
 }
 
-input:focus, select:focus {
-    outline: none;
-    background: rgba(255, 255, 255, 0.3);
+@keyframes slideIn {
+    0% { transform: translateX(20px); opacity: 0; }
+    100% { transform: translateX(0); opacity: 1; }
 }
 
+#transaction-history .income {
+    color: #00ffcc;
+}
+
+#transaction-history .expense {
+    color: #ff4d4d;
+}
+
+/* Buttons */
 button {
     padding: 12px;
     border: none;
@@ -88,10 +120,25 @@ button {
     font-size: 1rem;
     cursor: pointer;
     transition: 0.3s;
+    position: relative;
 }
 
 button:hover {
     background: #009688;
+}
+
+button:before {
+    content: '✨';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+button:hover:before {
+    opacity: 1;
 }
 
 /* Reset Button */
@@ -99,35 +146,32 @@ button:hover {
     background: #ff4d4d;
     color: white;
     font-weight: bold;
-    transition: 0.3s;
 }
 
 #reset-button:hover {
     background: #cc0000;
 }
 
-/* Animasi jika saldo kurang */
-@keyframes shake {
-    0% { transform: translateX(0); }
-    25% { transform: translateX(-5px); }
-    50% { transform: translateX(5px); }
-    75% { transform: translateX(-5px); }
-    100% { transform: translateX(0); }
+/* Animations for Input Fields */
+input, select {
+    padding: 10px;
+    border-radius: 5px;
+    border: 2px solid #00ffcc;
+    background: #1a1a1a;
+    color: white;
+    font-size: 1rem;
+    margin-bottom: 10px;
+    width: 100%;
+    transition: border-color 0.3s ease;
 }
 
-/* Responsive */
-@media (max-width: 480px) {
-    h1 { font-size: 1.5rem; }
-    #saldo { font-size: 1.5rem; }
-    button { font-size: 1rem; }
+input:focus, select:focus {
+    border-color: #00ffcc;
+    animation: pulse 1s infinite;
 }
-footer {
-    margin-top: 30px;
-    padding: 15px;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(5px);
-    text-align: center;
-    color: #ccc;
-    font-size: 0.9rem;
-    border-top: 2px solid #00ffcc;
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
 }
